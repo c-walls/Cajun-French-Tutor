@@ -48,9 +48,10 @@ backend/
     └── app.db
 
 frontend/
-├── templates/         # Pages + HTMX partials
+└── Templates/         # HTMX templates
 └── static/
-    ├── htmx.min.js
+    ├── index.html     
+    ├── styles.css
     └── app.js
 ```
 

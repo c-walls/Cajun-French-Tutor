@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse 
 from pathlib import Path
 
 app = FastAPI(title="Cajun French Tutor")
@@ -10,4 +11,4 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 async def root():
-    return {"status": "ok"}
+    return FileResponse(STATIC_DIR / "index.html")

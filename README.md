@@ -1,6 +1,6 @@
 # Cajun French Learning Platform
 
-AI-powered web app for learning and preserving Louisiana French dialects through practice, correction capture, and community knowledge.
+AI-powered web application for mapping, learning, and preserving Louisiana French dialects. Enables communities to document language variants and empower individuals to preserve their own cultural heritage.
 
 ## Stack
 - **Frontend:** Server-rendered HTML + HTMX + minimal vanilla JS

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cajun French Tutor — Mock Chat</title>
     <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
   </head>
   <body>
     <header class="topbar">
@@ -18,15 +19,19 @@
     </header>
 
     <main class="chat-shell">
-      <section class="messages">
+      <section class="messages" id="chat-log">
         <article class="bubble bot">Bonjour! Ready to practice Cajun French?</article>
         <article class="bubble user">Oui — let’s do a quick conversation.</article>
         <article class="bubble bot">Great. Tell me where you’re from in Louisiana.</article>
         <article class="bubble user">I’m from Lafayette.</article>
       </section>
 
-      <form class="composer" action="#">
-        <input type="text" placeholder="Type your message..." />
+      <form class="composer" 
+            hx-post="/chat" 
+            hx-target="#chat-log" 
+            hx-swap="beforeend scroll:bottom" 
+            hx-on::after-request="if(event.detail.successful) this.reset()">
+        <input type="text" name="message" placeholder="Type your message..." required/>
         <button type="submit">Send</button>
       </form>
     </main>

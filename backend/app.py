@@ -7,7 +7,7 @@ from google import genai
 
 app = FastAPI(title="Cajun French Tutor")
 api_key = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key)
+client = genai.Client()
 
 # Locate static directory: ../frontend/static
 STATIC_DIR = Path(__file__).resolve().parents[1] / "frontend" / "static"
@@ -28,7 +28,7 @@ async def chat(message: str = Form(...)):
     # Gemini used as a standin for testing
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=chat_history,
+        contents=message,
         config={'system_instruction': "You are a helpful Cajun French tutor."}
     )
     

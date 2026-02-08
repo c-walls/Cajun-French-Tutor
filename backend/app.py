@@ -3,6 +3,7 @@ from fastapi import FastAPI, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
 from pathlib import Path
+from google import genai
 
 app = FastAPI(title="Cajun French Tutor")
 api_key = os.environ.get("GEMINI_API_KEY")

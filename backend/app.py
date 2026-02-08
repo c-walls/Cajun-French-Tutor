@@ -5,13 +5,15 @@ from fastapi.responses import FileResponse, HTMLResponse
 from pathlib import Path
 
 app = FastAPI(title="Cajun French Tutor")
+api_key = os.environ.get("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key)
 
 # Locate static directory: ../frontend/static
 STATIC_DIR = Path(__file__).resolve().parents[1] / "frontend" / "static"
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 chat_history = []
-print(f"DEBUG: Gemini Key is: {os.environ.get('GEMINI_API_KEY')}")
+print(f"DEBUG: Gemini Key is: {api_key}")
 
 @app.get("/")
 async def root():

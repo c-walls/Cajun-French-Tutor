@@ -5,8 +5,8 @@ from pathlib import Path
 
 app = FastAPI(title="Cajun French Tutor")
 
-# Locate static directory
-STATIC_DIR = Path(__file__).resolve().parents[5] / "frontend" / "static"
+# Locate static directory: ../frontend/static
+STATIC_DIR = Path(__file__).resolve().parents[1] / "frontend" / "static"
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 chat_history = []
@@ -28,3 +28,4 @@ async def chat(message: str = Form(...)):
         <article class="bubble user">{message}</article>
         <article class="bubble bot">{bot_response}</article>
         """
+

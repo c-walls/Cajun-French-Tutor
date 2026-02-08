@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
@@ -10,17 +11,25 @@ STATIC_DIR = Path(__file__).resolve().parents[1] / "frontend" / "static"
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 chat_history = []
+print(f"DEBUG: Gemini Key is: {os.environ.get('GEMINI_API_KEY')}")
 
 @app.get("/")
 async def root():
     return FileResponse(STATIC_DIR / "index.html")
 
+
 @app.post("/chat", response_class=HTMLResponse)
 async def chat(message: str = Form(...)):
     chat_history.append({"role": "user", "content": message})
 
-    # TODO: Pass history to the model to prompt for response
-    bot_response = f"C'est bon! Context length is now {len(chat_history)}. You said: {message}"
+    # Gemini used as a standin for testing
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=chat_history,
+        config={'system_instruction': "You are a helpful Cajun French tutor."}
+    )
+    
+    bot_response = response.text
     chat_history.append({"role": "bot", "content": bot_response})
     
     # 4. Return pre-rendered HTML fragments

@@ -14,7 +14,7 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 # Setup gemini chat session for testing
 chat_history = []
 client = genai.Client()
-chat = client.chats.create(
+chat_session = client.chats.create(
     model="gemini-2.5-flash",
     config={'system_instruction': "You are a helpful Cajun French tutor."}
 )
@@ -30,7 +30,7 @@ async def chat(message: str = Form(...)):
     chat_history.append({"role": "user", "content": message})
 
     # Gemini used as a standin for testing
-    response = chat.send_message(message)
+    response = chat_session.send_message(message)
     bot_response = response.text
     chat_history.append({"role": "bot", "content": bot_response})
     
@@ -39,4 +39,5 @@ async def chat(message: str = Form(...)):
         <article class="bubble user">{message}</article>
         <article class="bubble bot">{bot_response}</article>
         """
+
 
